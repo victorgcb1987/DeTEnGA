@@ -144,7 +144,7 @@ def main():
             with open(TEsorter_results[label]["out_fpath"]) as TEsorter_fhand:
                 te_sorter_output = parse_TEsort_output(TEsorter_fhand)
         
-            with open(interpro_results[label]["out_fhand"]) as interpro_fhand:
+            with open(interpro_results[label]["out_fpath"]) as interpro_fhand:
                 interpro = get_pfams_from_interpro_query(interpro_fhand)
                 classified_pfams = classify_pfams(interpro, TE_pfams)
     
@@ -157,6 +157,6 @@ def main():
                 log_fhand.write(msg)
                 log_fhand.flush()
     print("Program finished. Exiting")
-    
+
 if __name__ == "__main__":
     main()
