@@ -114,10 +114,12 @@ def main():
 
     #Run interproscan
     msg = "##STEP 4: Analyze protein transposable elements with interproscan"
+    print(msg)
     log_fhand.write(msg)
     log_fhand.flush()
     interpro_results = run_interpro(no_stop_codons_sequences, args["threads"])
     print(interpro_results)
+
 
         
 
