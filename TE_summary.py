@@ -150,7 +150,7 @@ def main():
     
             te_summary = create_summary(classified_pfams, te_sorter_output)
     
-            out_fpath = Path(out_dir / "{}_TE_summary.csv".format(label))
+            out_fpath = Path(out_dir / label / "{}_TE_summary.csv".format(label))
             with open(out_fpath, "w") as out_fhand:
                 write_summary(te_summary, out_fhand)
                 msg = "TE Summary for {} written in {}\n".format(label, out_fpath)
