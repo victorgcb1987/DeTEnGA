@@ -140,9 +140,9 @@ def run_interpro(sequences, threads):
     
     interpro_results = {}
     for label, values in sequences.items():
-        out_fpath = values["out_fpath"]
+        sequences = values["out_fpath"]
         os.chdir(out_fpath.parents[0].absolute())
-        out_fpath = Path("{}.tsv".format(values["out_fpath"]))
+        out_fpath = Path("{}.tsv".format(values["sequences"]))
         log_fpath = Path("{}/interpro.log.txt".format(out_fpath.parents[0]))
         cmd = "interproscan.sh -i {} -cpu {} -exclappl {} > {}".format(str(out_fpath), 
                                                                   threads, ",".join(exclude),
@@ -157,7 +157,7 @@ def run_interpro(sequences, threads):
             if returncode == 0:
                 msg = "Done, check {} for details".format(log_fpath)
             else:
-                msg = run_.stderr.decode()
+                msg = run_.stodut.decode()
         interpro_results[label] = {"command": cmd, "msg": msg,
                                    "out_fpath": out_fpath}
         
