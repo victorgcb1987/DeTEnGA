@@ -1,13 +1,18 @@
 #!/usr/bin/env python
 
 import argparse
+import os
 import sys
 
 from pathlib import Path
 
 
-from src.parsers import parse_fof
+from src.parsers import (parse_fof, get_pfams_from_db, get_pfams_from_interpro_query, 
+                         parse_TEsort_output, classify_pfams, create_summary, write_summary)
 from src.run import run_gffread, run_TEsorter, remove_stop_codons, run_interpro
+
+REXDB_PFAMS = Path(os.path.dirname(os.path.realpath(__file__))) / "data" / "rexdb_Viridiplantae_4.0_pfams.txt"
+
 
 #Generating program options
 def parse_arguments():
@@ -86,9 +91,9 @@ def main():
     print(msg)
     log_fhand.write(msg)
     log_fhand.flush()
-    te_sorter = run_TEsorter(sequences, args["tesorter_database"], args["threads"])
+    TEsorter_results = run_TEsorter(sequences, args["tesorter_database"], args["threads"])
     failed_runs = []
-    for label, value in te_sorter.items():
+    for label, value in TEsorter_results.items():
         log_fhand.write("{} | {}\n".format(value["command"], value["msg"]))
         log_fhand.flush()
         if value["returncode"] == 1:
@@ -98,7 +103,7 @@ def main():
 
     for key in failed_runs:
         sequences.pop(key)
-
+        TEsorter_results.pop[key]
     #Trim Sequences with internal stop codons
     msg = "##STEP 3: Remove internal stop codons from proteins\n"
     print(msg)
@@ -127,12 +132,31 @@ def main():
             log_fhand.write("{} | {}\n".format(values["command"], values["msg"]))
     for key in failed_runs:
         interpro_results.pop(key)
-       
-              
 
 
+    msg = "##STEP 5: merging evidences from interpro and TEsorter\n"
+    print(msg)
+    log_fhand.write(msg)
+    log_fhand.flush()
+    TE_pfams = get_pfams_from_db(REXDB_PFAMS)
+    for label in sequences:
+        if label in interpro_results and label in TEsorter_results:
+            with open(TEsorter_results[label]["out_fpath"]) as TEsorter_fhand:
+                te_sorter_output = parse_TEsort_output(TEsorter_fhand)
         
-
-
+            with open(interpro_results[label]["out_fhand"]) as interpro_fhand:
+                interpro = get_pfams_from_interpro_query(interpro_fhand)
+                classified_pfams = classify_pfams(interpro, TE_pfams)
+    
+            te_summary = create_summary(classified_pfams, te_sorter_output)
+    
+            out_fpath = Path(out_dir / "{}_TE_summary.csv".format(label))
+            with open(out_fpath, "w") as out_fhand:
+                write_summary(te_summary, out_fhand)
+                msg = "TE Summary for {} written in {}\n".format(label, out_fpath)
+                log_fhand.write(msg)
+                log_fhand.flush()
+    print("Program finished. Exiting")
+    
 if __name__ == "__main__":
     main()
