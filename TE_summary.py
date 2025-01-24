@@ -113,7 +113,7 @@ def main():
     
 
     #Run interproscan
-    msg = "##STEP 4: Analyze protein transposable elements with interproscan"
+    msg = "##STEP 4: Analyze protein transposable elements with interproscan\n"
     print(msg)
     log_fhand.write(msg)
     log_fhand.flush()
