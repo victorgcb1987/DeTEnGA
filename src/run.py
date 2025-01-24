@@ -158,7 +158,7 @@ def run_interpro(sequences, threads):
             else:
                 msg = run_.stodut.decode()
         interpro_results[label] = {"command": cmd, "msg": msg,
-                                   "out_fpath": out_fpath}
+                                   "out_fpath": out_fpath, "returncode": returncode}
         
         os.chdir(base_dir)
     return interpro_results

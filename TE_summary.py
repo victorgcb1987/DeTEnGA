@@ -118,7 +118,17 @@ def main():
     log_fhand.write(msg)
     log_fhand.flush()
     interpro_results = run_interpro(no_stop_codons_sequences, args["threads"])
-    print(interpro_results)
+    failed_runs = []
+    for label, values in interpro_results.items():
+         if value["returncode"] == 1:
+            failed_runs.append(key)
+            log_fhand.write("Removed {} from pipeline, please check the error message\n\n".format(label))
+         else:
+            log_fhand.write("{} | {}\n".format(interpro_results["command"], interpro_results["msg"]))
+    for key in failed_runs:
+        interpro_results.pop(key)
+       
+              
 
 
         
