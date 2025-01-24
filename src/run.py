@@ -136,7 +136,7 @@ def run_interpro(sequences, threads):
                "ProSiteProfiles", "SFLD", "SMART", 
                "SUPERFAMILY"]
     base_dir = Path(os.getcwd())
-    out_file = "{}.tsv".format(str)
+    out_file = Path("{}.tsv".format(str))
     
     interpro_results = {}
     for label, values in sequences.items():
