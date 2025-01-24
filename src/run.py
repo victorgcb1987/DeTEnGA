@@ -111,7 +111,6 @@ def remove_stop_codons(sequences):
                             stop_codons = [".", "*"]
                             for symbol in stop_codons:
                                 if symbol in line:
-                                    print(id)
                                     stop = True
                                     seq = line.split(symbol)[0]
                                     new_len += len(seq)

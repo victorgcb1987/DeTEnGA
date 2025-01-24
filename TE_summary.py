@@ -124,7 +124,7 @@ def main():
             failed_runs.append(key)
             log_fhand.write("Removed {} from pipeline, please check the error message\n\n".format(label))
          else:
-            log_fhand.write("{} | {}\n".format(interpro_results["command"], interpro_results["msg"]))
+            log_fhand.write("{} | {}\n".format(values["command"], values["msg"]))
     for key in failed_runs:
         interpro_results.pop(key)
        
