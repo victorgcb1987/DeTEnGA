@@ -136,18 +136,17 @@ def run_interpro(sequences, threads):
                "ProSiteProfiles", "SFLD", "SMART", 
                "SUPERFAMILY"]
     base_dir = Path(os.getcwd())
-    out_file = Path("{}.tsv".format(str))
     
     interpro_results = {}
     for label, values in sequences.items():
         sequences = values["out_fpath"]
-        os.chdir(out_fpath.parents[0].absolute())
+        os.chdir(sequences.parents[0].absolute())
         out_fpath = Path("{}.tsv".format(values["sequences"]))
         log_fpath = Path("{}/interpro.log.txt".format(out_fpath.parents[0]))
-        cmd = "interproscan.sh -i {} -cpu {} -exclappl {} > {}".format(str(out_fpath), 
+        cmd = "interproscan.sh -i {} -cpu {} -exclappl {} > {}".format(str(values["sequences"]), 
                                                                   threads, ",".join(exclude),
                                                                   log_fpath)
-        if out_file.exists():
+        if out_fpath.exists():
             returncode = 99
             msg = "File {} already exists, check log {} for details".format(str(out_fpath),
                                                                            str(log_fpath))
