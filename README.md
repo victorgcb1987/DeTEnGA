@@ -1,6 +1,6 @@
 # DeTEnGA
 
-Detection of Transposable Elements (TEs) on Gene Annotations (**DeTEnGA**) is a a tool to detect TEs on sequences annotated as gene ORFs. It uses the outputs of TEsorter for detect TEs in mRNA sequences and interproscan to detect domains associated with TEs in proteins and merge results in a summary file.
+Detection of Transposable Elements (TEs) on Gene Annotations (**DeTEnGA**) is a a tool to detect TEs in sequences annotated as gene ORFs. It uses the outputs of TEsorter for detect TEs in mRNA sequences and interproscan to detect domains associated with TEs in proteins and merge results in a summary file.
 
 ## Requirements
 
