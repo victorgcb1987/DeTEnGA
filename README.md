@@ -4,6 +4,8 @@ conda create -n TEsorter -c bioconda tesorter
 conda activate TEsorter
 conda install python=3.12
 
+export PATH=$PATH:~/soft/interproscan-5.72-103.0/
+
 fof.txt
 
 label path_to_fasta  path_to_annotation
