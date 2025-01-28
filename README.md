@@ -4,6 +4,8 @@ Detection of Transposable Elements (TEs) on Gene Annotations (**DeTEnGA**) is a 
 
 ## Requirements
 
+**gffread**: you can download gffread from https://github.com/gpertea/gffread
+
 **TEsorter**: we recommend installing TEsorter using conda as follows: `conda create -n TEsorter -c bioconda tesorter`. Then, update python from this conda installation (python v3.6 uses some python deprecated functions): `conda install python=3.12`.
 
 **Interproscan**: we recommend using the github version instead of any conda installation (https://interproscan-docs.readthedocs.io/en/latest/HowToDownload.html)
