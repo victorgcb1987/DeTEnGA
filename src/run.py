@@ -142,9 +142,9 @@ def run_interpro(sequences, threads):
         os.chdir(sequences.parents[0].absolute())
         out_fpath = Path("{}.tsv".format(values["out_fpath"]))
         log_fpath = Path("{}/interpro.log.txt".format(out_fpath.parents[0]))
-        cmd = "interproscan.sh -i {} -cpu {} -exclappl {} > {}".format(str(values["out_fpath"]), 
-                                                                  threads, ",".join(exclude),
-                                                                  log_fpath)
+        cmd = "interproscan.sh -i {} -cpu {} -exclappl {} --disable-precalc > {}".format(str(values["out_fpath"]), 
+                                                                                         threads, ",".join(exclude),
+                                                                                         log_fpath)
         if out_fpath.exists():
             returncode = 99
             msg = "File {} already exists, check log {} for details".format(str(out_fpath),
