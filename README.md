@@ -20,7 +20,7 @@ Then, add interproscan.sh to your PATH variable:
 In order to use DeTEnga you will need at least an uncompressed FASTA file with the genome assembly and an uncompressed genome annotation file (gff or gtf). You can run it with multiple annotations and assemblies. There is an exemple for running this program:  
 
 ``DeTEnGA.py -i fof.txt -o output_dir -t num_threads -s rexdb-plant``  
-``--input, -i  (Required) file of files used as an input for DeTEnGA  
+``--input, -i  (Required) file of files used as an input for DeTEnGA\  
 --output, -o (Required) output directory  
 --threads, -t (Optional, default = 1) number of threads  
 --tesorter_database, -s (Optional, default = "rexdb-plant") database used with TEsorter)``
