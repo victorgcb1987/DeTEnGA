@@ -103,7 +103,7 @@ def main():
 
     for key in failed_runs:
         sequences.pop(key)
-        TEsorter_results.pop[key]
+        TEsorter_results.pop(key)
     #Trim Sequences with internal stop codons
     msg = "##STEP 3: Remove internal stop codons from proteins\n"
     print(msg)

@@ -155,7 +155,7 @@ def run_interpro(sequences, threads):
             if returncode == 0:
                 msg = "Done, check {} for details".format(log_fpath)
             else:
-                msg = run_.stodut.decode()
+                msg = run_.stdout.decode()
         interpro_results[label] = {"command": cmd, "msg": msg,
                                    "out_fpath": out_fpath, "returncode": returncode}
         
