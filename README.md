@@ -23,7 +23,7 @@ In order to use DeTEnga you will need at least an uncompressed FASTA file with t
 **--input, -i**:  (Required) file of files used as an input for DeTEnGA    
 **--output, -o**: (Required) output directory  
 **--threads, -t**: (Optional, default = 1) number of threads  
-**--tesorter_database, -s**: (Optional, default = "rexdb-plant") database used with TEsorter)``
+**--tesorter_database, -s**: (Optional, default = "rexdb-plant") database used with TEsorter)
 
 The file of files is a plain text in tabular format with three columns, being the first one a label for your analized annotation, a path for your assembly and the path for the annotation, for example:
 Nicotiana_benthamiana  /path/to/nicoben/assembly.fasta  /path/to/nicoben/annotation.gff
