@@ -11,22 +11,10 @@ Then, add interproscan.sh to your PATH variable:
 
 `export PATH=$PATH:/path/to/interproscan.sh`
 
-**DETENGA**: just clone this respository `git clone https://github.com/victorgcb1987/DeTEnGA.git`
+**DeTEnGA**: just clone this respository `git clone https://github.com/victorgcb1987/DeTEnGA.git`
 
 
-
-**smudgeplot v0.2.5** : We recommend to use conda (`conda install smudgeplot==0.2.5`) to install this module.  
-
-kmc https://github.com/refresh-bio/KMC. You will need to add kmc binaries to PATH variable for example using `export PATH=$PATH:kmc/install/bin/`
-
-clone KATULU respository: `git clone https://github.com/victorgcb1987/KATULU.git`
-
-conda create -n TEsorter -c bioconda tesorter
-conda activate TEsorter
-conda install python=3.12
-
-export PATH=$PATH:~/soft/interproscan-5.72-103.0/
-
+## How to use
 fof.txt
 
 label path_to_fasta  path_to_annotation
