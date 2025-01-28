@@ -11,7 +11,7 @@ Then, add interproscan.sh to your PATH variable:
 
 `export PATH=$PATH:/path/to/interproscan.sh`
 
-**DETENGA**: just clone this respository `git clone  
+**DETENGA**: just clone this respository `git clone https://github.com/victorgcb1987/DeTEnGA.git`
 
 
 
