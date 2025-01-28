@@ -7,6 +7,7 @@ Detection of Transposable Elements (TEs) on Gene Annotations (DeTEnGA) is a a to
 **TEsorter** : we recommend installing TEsorter using conda as follows:
 `conda create -n TEsorter -c bioconda tesorter`
 
+
 Then, update python from this conda installation (python v3.6 uses some python deprecated functions):
 `conda install python=3.12`
 
