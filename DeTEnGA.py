@@ -77,7 +77,7 @@ def main():
     failed_runs = []
     for label, values in sequences.items():
         for kind in ["mrna", "protein"]:
-            log_fhand.write("{} | {}\n".format(values["command"][kind], value["msg"][kind]))
+            log_fhand.write("{} | {}\n".format(values["command"][kind], values["msg"][kind]))
             log_fhand.flush()
         if values["returncode"]["mrna"] == 1 or values["returncode"]["protein"] == 1:
             failed_runs.append(label)
