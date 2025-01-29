@@ -126,12 +126,12 @@ def main():
     failed_runs = []
     for label, values in interpro_results.items():
          if value["returncode"] == 1:
-            failed_runs.append(key)
+            failed_runs.append(label)
             log_fhand.write("Removed {} from pipeline, please check the error message\n\n".format(label))
          else:
             log_fhand.write("{} | {}\n".format(values["command"], values["msg"]))
-    for key in failed_runs:
-        interpro_results.pop(key)
+    for label in failed_runs:
+        interpro_results.pop(label)
 
 
     msg = "##STEP 5: merging evidences from interpro and TEsorter\n"
