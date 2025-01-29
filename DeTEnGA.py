@@ -75,11 +75,11 @@ def main():
     log_fhand.write(msg)
     sequences = run_gffread(files, args["out"])
     failed_runs = []
-    for label, value in sequences.items():
+    for label, values in sequences.items():
         for kind in ["mrna", "protein"]:
-            log_fhand.write("{} | {}\n".format(value["command"][kind], value["msg"][kind]))
+            log_fhand.write("{} | {}\n".format(values["command"][kind], value["msg"][kind]))
             log_fhand.flush()
-        if value["returncode"]["mrna"] == 1 or value["returncode"]["protein"] == 1:
+        if values["returncode"]["mrna"] == 1 or values["returncode"]["protein"] == 1:
             failed_runs.append(label)
             log_fhand.write("Removed {} from pipeline, please check the error message\n\n".format(label))
             log_fhand.flush()
@@ -93,10 +93,10 @@ def main():
     log_fhand.flush()
     TEsorter_results = run_TEsorter(sequences, args["tesorter_database"], args["threads"])
     failed_runs = []
-    for label, value in TEsorter_results.items():
-        log_fhand.write("{} | {}\n".format(value["command"], value["msg"]))
+    for label, values in TEsorter_results.items():
+        log_fhand.write("{} | {}\n".format(values["command"], values["msg"]))
         log_fhand.flush()
-        if value["returncode"] == 1:
+        if values["returncode"] == 1:
             failed_runs.append(label)
             log_fhand.write("Removed {} from pipeline, please check the error message\n\n".format(label))
             log_fhand.flush()
@@ -125,11 +125,12 @@ def main():
     interpro_results = run_interpro(no_stop_codons_sequences, args["threads"])
     failed_runs = []
     for label, values in interpro_results.items():
-         if value["returncode"] == 1:
+         if values["returncode"] == 1:
             failed_runs.append(label)
             log_fhand.write("Removed {} from pipeline, please check the error message\n\n".format(label))
          else:
             log_fhand.write("{} | {}\n".format(values["command"], values["msg"]))
+    print(failed_runs)
     for label in failed_runs:
         interpro_results.pop(label)
 
