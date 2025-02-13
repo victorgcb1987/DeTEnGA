@@ -180,20 +180,20 @@ def main():
             header += "\tTE_mRNA(%)\tNonTE_mRNA(%)"
             header += "\tTE_detected_in_both(%)\n"
             combined_summaries_fhand.write(header)
-        for label, results in agat_results.items():
-            stats = get_stats(results["out_fpath"], summaries[label])
-            line = f'{label}\t{stats["num_transcripts"]}'
-            line += f'\t{stats["coding_protein"]}\t{stats["te_protein"]}'
-            line += f'\t{stats["mixed_protein"]}\t{stats["te_mrna"]}'
-            line += f'\t{stats["nonte_mrna"]}\t{stats["both"]}'
-            line += f'\t{float(stats["coding_protein"]/stats["num_transcripts"])}'
-            line += f'\t{float(stats["te_protein"]/stats["num_transcripts"])}'
-            line += f'\t{float(stats["mixed_protein"]/stats["num_transcripts"])}'
-            line += f'\t{float(stats["te_mrna"]/stats["num_transcripts"])}'
-            line += f'\t{float(stats["nonte_mrna"]/stats["num_transcripts"])}'
-            line += f'\t{float(stats["both"]/stats["num_transcripts"])}'
-            line += "\n"
-            combined_summaries_fhand.write(line)
+            for label, results in agat_results.items():
+                stats = get_stats(results["out_fpath"], summaries[label])
+                line = f'{label}\t{stats["num_transcripts"]}'
+                line += f'\t{stats["coding_protein"]}\t{stats["te_protein"]}'
+                line += f'\t{stats["mixed_protein"]}\t{stats["te_mrna"]}'
+                line += f'\t{stats["nonte_mrna"]}\t{stats["both"]}'
+                line += f'\t{float(stats["coding_protein"]/stats["num_transcripts"])}'
+                line += f'\t{float(stats["te_protein"]/stats["num_transcripts"])}'
+                line += f'\t{float(stats["mixed_protein"]/stats["num_transcripts"])}'
+                line += f'\t{float(stats["te_mrna"]/stats["num_transcripts"])}'
+                line += f'\t{float(stats["nonte_mrna"]/stats["num_transcripts"])}'
+                line += f'\t{float(stats["both"]/stats["num_transcripts"])}'
+                line += "\n"
+                combined_summaries_fhand.write(line)
 
     print("Program finished. Exiting")
 
