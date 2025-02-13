@@ -127,7 +127,7 @@ def write_summary(summary, out_fhand):
         out_fhand.flush()
 
 
-def get_stat(agat_stats, summary):
+def get_stats(agat_stats, summary):
     with open(agat_stats) as agat_fhand:
         text = agat_fhand.read()
         match = re.search(r"Number of mrna\s+(\d+)", text, re.IGNORECASE)
