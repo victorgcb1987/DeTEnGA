@@ -9,7 +9,7 @@ from pathlib import Path
 
 from src.parsers import (parse_fof, get_pfams_from_db, get_pfams_from_interpro_query, 
                          parse_TEsort_output, classify_pfams, create_summary, write_summary)
-from src.run import run_gffread, run_TEsorter, remove_stop_codons, run_interpro
+from src.run import run_gffread, run_TEsorter, remove_stop_codons, run_interpro, run_agat
 
 REXDB_PFAMS = Path(os.path.dirname(os.path.realpath(__file__))) / "data" / "rexdb_Viridiplantae_4.0_pfams.txt"
 
@@ -39,6 +39,10 @@ def parse_arguments():
     parser.add_argument("--tesorter_database", "-s", type=str,
                         help=help_database, default="rexdb-plant")
     
+    help_combine = "(Optional) combine all summaries. False by default"
+    parser.add_argument("--combine", "-c", action="store_true",
+                        help=help_combine)
+    
     if len(sys.argv)==1:
         parser.print_help()
         exit()
@@ -46,16 +50,14 @@ def parse_arguments():
 
 def get_arguments():
     parser = parse_arguments()
-    input = parser.input
     output = Path(parser.output)
-    threads = parser.threads
-    tesorter_database = parser.tesorter_database
     if not output.exists():
         output.mkdir(parents=True)
-    return {"input": input,
-            "out": output, 
-            "threads": threads,
-            "tesorter_database": tesorter_database}
+    return {"input": parser.input,
+            "out": output,
+            "threads": parser.threads,
+            "tesorter_database": parser.tesorter_database,
+            "combine": parser.combine}
 
 
 def main():
@@ -69,6 +71,7 @@ def main():
     log_fhand = open(log, "a")
     log_fhand.write("#Command used: {}\n".format(" ".join(sys.argv)))
     
+
     #Retrieve sequences
     msg = "##STEP 1: Retrive sequences with gffread\n"
     print(msg)
@@ -140,6 +143,7 @@ def main():
     log_fhand.write(msg)
     log_fhand.flush()
     TE_pfams = get_pfams_from_db(REXDB_PFAMS)
+    summaries = {}
     for label in sequences:
         if label in interpro_results and label in TEsorter_results:
             with open(TEsorter_results[label]["out_fpath"]) as TEsorter_fhand:
@@ -154,9 +158,25 @@ def main():
             out_fpath = Path(out_dir / label / "{}_TE_summary.csv".format(label))
             with open(out_fpath, "w") as out_fhand:
                 write_summary(te_summary, out_fhand)
+                summaries[label] = out_fpath
                 msg = "TE Summary for {} written in {}\n".format(label, out_fpath)
                 log_fhand.write(msg)
                 log_fhand.flush()
+    
+    if args["combine"]:
+        with open(args["out"]/ "combined_summaries", "w") as combined_summaries_fhand:
+            header = "Run\tAnnotated_transcripts(N)\tCoding_proteins(N)"
+            header += "\tTE_proteins(N)\tMixed_Proteins(N)"
+            header += "\tTE_mRNA(N)\tNonTE_mRNA(N)"
+            header += "\tTE_detected_in_both(N)"
+            header += "\tCoding_proteins(%)"
+            header += "\tTE_proteins(%)\tMixed_Proteins(%)"
+            header += "\tTE_mRNA(%)\tNonTE_mRNA(%)"
+            header += "\tTE_detected_in_both(%)\n"
+            combined_summaries_fhand.write(header)
+            agat_results = run_agat(summaries, files, args["out"])
+
+
     print("Program finished. Exiting")
 
 if __name__ == "__main__":

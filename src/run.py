@@ -163,4 +163,24 @@ def run_interpro(sequences, threads):
     return interpro_results
     
         
-
+def run_agat(summaries, annotations):
+    agat_results = {}
+    for label, summary in summaries.items():
+        base_dir = summary.parents[0].absolute()
+        agat_out = base_dir / "{}.agat.stats.txt"
+        annot_file = annotations[label]["annotation"]
+        cmd = "agat_sp_statistics.pl --gff {} -o {}".format(str(annot_file), 
+                                                            agat_out)
+        if agat_out.exists():
+            returncode = 99
+            msg = "File {} already exists".format(str(agat_out))
+        else:
+            run_ = run(cmd, shell=True, capture_output=True)
+            returncode = run_.returncode
+            if returncode == 0:
+                msg = "Done"
+            else:
+                msg = run_.stdout.decode()
+        agat_results[label] = {"command": cmd, "msg": msg,
+                               "out_fpath": agat_out, "returncode": returncode}
+    return agat_results 
