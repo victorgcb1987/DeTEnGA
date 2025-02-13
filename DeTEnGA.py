@@ -188,7 +188,7 @@ def main():
             line += f'\t{stats["nonte_mrna"]}\t{stats["both"]}'
             line += f'\t{float(stats["coding_protein"]/stats["num_transcripts"])}'
             line += f'\t{float(stats["te_protein"]/stats["num_transcripts"])}'
-            line += f'\t{float(stats["mixed_proteins"]/stats["num_transcripts"])}'
+            line += f'\t{float(stats["mixed_protein"]/stats["num_transcripts"])}'
             line += f'\t{float(stats["te_mrna"]/stats["num_transcripts"])}'
             line += f'\t{float(stats["nonte_mrna"]/stats["num_transcripts"])}'
             line += f'\t{float(stats["both"]/stats["num_transcripts"])}'
