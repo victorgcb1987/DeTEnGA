@@ -171,6 +171,7 @@ def run_agat(summaries, annotations):
         annot_file = annotations[label]["annotation"]
         cmd = "agat_sp_statistics.pl --gff {} -o {}".format(str(annot_file), 
                                                             agat_out)
+        print(cmd)
         if agat_out.exists():
             returncode = 99
             msg = "File {} already exists".format(str(agat_out))
