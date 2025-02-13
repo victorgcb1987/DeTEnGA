@@ -8,7 +8,8 @@ from pathlib import Path
 
 
 from src.parsers import (parse_fof, get_pfams_from_db, get_pfams_from_interpro_query, 
-                         parse_TEsort_output, classify_pfams, create_summary, write_summary)
+                         parse_TEsort_output, classify_pfams, create_summary, write_summary,
+                         get_stats)
 from src.run import run_gffread, run_TEsorter, remove_stop_codons, run_interpro, run_agat
 
 REXDB_PFAMS = Path(os.path.dirname(os.path.realpath(__file__))) / "data" / "rexdb_Viridiplantae_4.0_pfams.txt"
@@ -164,8 +165,12 @@ def main():
                 log_fhand.flush()
     
     if args["combine"]:
+        msg = "##STEP 6: Running stats on annotation files\n"
+        print(msg)
+        log_fhand.write(msg)
+        log_fhand.flush()
         agat_results = run_agat(summaries, files)
-        with open(args["out"]/ "combined_summaries", "w") as combined_summaries_fhand:
+        with open(args["out"]/ "combined_summaries.tsv", "w") as combined_summaries_fhand:
             header = "Run\tAnnotated_transcripts(N)\tCoding_proteins(N)"
             header += "\tTE_proteins(N)\tMixed_Proteins(N)"
             header += "\tTE_mRNA(N)\tNonTE_mRNA(N)"
@@ -175,8 +180,20 @@ def main():
             header += "\tTE_mRNA(%)\tNonTE_mRNA(%)"
             header += "\tTE_detected_in_both(%)\n"
             combined_summaries_fhand.write(header)
-            
-
+        for label, results in agat_results.items():
+            stats = get_stats(results["out_fpath"], summaries[label])
+            line = f'{label}\t{stats["num_transcripts"]}'
+            line += f'\t{stats["coding_protein"]}\t{stats["te_protein"]}'
+            line += f'\t{stats["mixed_protein"]}\t{stats["te_mrna"]}'
+            line += f'\t{stats["nonte_mrna"]}\t{stats["both"]}'
+            line += f'\t{float(stats["coding_protein"]/stats["num_transcripts"])}'
+            line += f'\t{float(stats["te_protein"]/stats["num_transcripts"])}'
+            line += f'\t{float(stats["mixed_proteins"]/stats["num_transcripts"])}'
+            line += f'\t{float(stats["te_mrna"]/stats["num_transcripts"])}'
+            line += f'\t{float(stats["nonte_mrna"]/stats["num_transcripts"])}'
+            line += f'\t{float(stats["both"]/stats["num_transcripts"])}'
+            line += "\n"
+            combined_summaries_fhand.write(line)
 
     print("Program finished. Exiting")
 

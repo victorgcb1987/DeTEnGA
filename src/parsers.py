@@ -125,3 +125,37 @@ def write_summary(summary, out_fhand):
                                              row["tesort_complete"], row["tesort_strand"])
         out_fhand.write(line_total)
         out_fhand.flush()
+
+
+def get_stat(agat_stats, summary):
+    with open(agat_stats) as agat_fhand:
+        text = agat_fhand.read()
+        match = re.search(r"Number of mrna\s+(\d+)", text, re.IGNORECASE)
+        num_transcripts = int(match.group(1))
+    stats = {"coding_protein": 0, "mixed_protein": 0, "te_protein": 0,
+             "te_mrna": 0, "nonte_mrna": 0, "both": 0, "num_transcripts": num_transcripts}
+    for row in DictReader(summary, delimiter=";"):
+        protein_te = False
+        mrna_te = False
+        if row["Interpro_status"] == "coding_sequence":
+            stats["coding_protein"] += 1
+        if row["Interpro_status"] == "transposable_element":
+            protein_te = True
+            stats["te_protein"] += 1
+        if row["Interpro_status"] == "mixed":
+            stats["mixed_protein"] += 1
+        if row["TEsort_class"] != "NA":
+            mrna_te = True
+            stats["te_mrna"] += 1
+        else:
+            stats["nonte_mrna"] += 1
+        if protein_te and mrna_te:
+            stats["both"] += 1
+    return stats
+
+
+
+
+
+
+
