@@ -164,6 +164,7 @@ def main():
                 log_fhand.flush()
     
     if args["combine"]:
+        agat_results = run_agat(summaries, files)
         with open(args["out"]/ "combined_summaries", "w") as combined_summaries_fhand:
             header = "Run\tAnnotated_transcripts(N)\tCoding_proteins(N)"
             header += "\tTE_proteins(N)\tMixed_Proteins(N)"
@@ -174,7 +175,7 @@ def main():
             header += "\tTE_mRNA(%)\tNonTE_mRNA(%)"
             header += "\tTE_detected_in_both(%)\n"
             combined_summaries_fhand.write(header)
-            agat_results = run_agat(summaries, files, args["out"])
+            
 
 
     print("Program finished. Exiting")
