@@ -134,7 +134,7 @@ def get_stats(agat_stats, summary):
         num_transcripts = int(match.group(1))
     stats = {"coding_protein": 0, "mixed_protein": 0, "te_protein": 0,
              "te_mrna": 0, "nonte_mrna": 0, "both": 0, "num_transcripts": num_transcripts}
-    for row in DictReader(summary, delimiter=";"):
+    for row in DictReader(open(summary), delimiter=";"):
         protein_te = False
         mrna_te = False
         if row["Interpro_status"] == "coding_sequence":
