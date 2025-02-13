@@ -167,7 +167,7 @@ def run_agat(summaries, annotations):
     agat_results = {}
     for label, summary in summaries.items():
         base_dir = summary.parents[0].absolute()
-        agat_out = base_dir / "{}.agat.stats.txt"
+        agat_out = base_dir / "{}.agat.stats.txt".format(label)
         annot_file = annotations[label]["annotation"]
         cmd = "agat_sp_statistics.pl --gff {} -o {}".format(str(annot_file), 
                                                             agat_out)
