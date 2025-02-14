@@ -144,7 +144,7 @@ def get_stats(agat_stats, summary):
             stats["te_protein"] += 1
         if row["Interpro_status"] == "mixed":
             stats["mixed_protein"] += 1
-        if row["TEsort_class"] != "NA":
+        if row["TEsort_domains"] != "NA":
             mrna_te = True
             stats["te_mrna"] += 1
         else:
