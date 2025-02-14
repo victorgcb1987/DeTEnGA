@@ -26,20 +26,18 @@ def get_pfams_from_db(fpath):
             pfams[line[0]] = " ".join(line[1:])
     return pfams
 
-def get_pfams_from_interpro_query(fhand):
-    pattern = r"^(\S+)\t(\S+)\t(\S+)\tPfam\t([^\t]+)\t([^\t]+)\t(\d+)\t(\d+)\t([^\t]+)\t([^\t]+)\t([^\t]+)\t([^\t]+)\t([^\t]+)\t([^\t]+)\t([^\t]+)\t([^\t]+)"
 
-    text = fhand.read()
+def get_pfams_from_interpro_query(fhand):
     genes = defaultdict(list)
-    matches = re.findall(pattern, text, re.MULTILINE)
-    for match in matches:
-        gen, code, description, start, end = match[0], match[3], match[4], match[5], match[6]
-        genes[gen].append([code, description, start, end])
+    for line in fhand:
+        line = line.split("\t")
+        if line[3] == "Pfam":
+            gen, code, description, start, end = line[0], line[4], line[5], line[6], line[7]
+            genes[gen].append([code, description, start, end])
     sorted_genes = {
                     key: sorted(value, key=lambda x: int(x[2]))  # Ordena por el tercer valor (convertido a entero)
                     for key, value in genes.items()}
     return sorted_genes
-
 def classify_pfams(interpro, te_pfams):
     for gene, pfams in interpro.items():
         for pfam in pfams:
