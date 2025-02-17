@@ -204,8 +204,8 @@ def main():
             short_summary_fhand.write("Run\tgenome\tannotation\tstats")
             for label, results in agat_results.items():
                 stats = get_stats(results["out_fpath"], summaries[label])
-                genome = sequences[label]["assembly"].stem()
-                annotation = sequences[label]["annotation"].stem()
+                genome = files[label]["assembly"].stem()
+                annotation = files[label]["annotation"].stem()
                 line = f"{label}\t{genome}\t{annotation}\t"
                 line += f"IPR_CDS: {stats["coding_protein"]}; "
                 line += f"IPR_NA_TES: {stats["IPR_NA_TEs"]}; "
