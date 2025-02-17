@@ -204,6 +204,7 @@ def main():
             short_summary_fhand.write("Run\tgenome\tannotation\tstats")
             for label, results in agat_results.items():
                 stats = get_stats(results["out_fpath"], summaries[label])
+                print(files)
                 genome = Path(files[label]["assembly"]).stem()
                 annotation = Path(files[label]["annotation"]).stem()
                 line = f"{label}\t{genome}\t{annotation}\t"
