@@ -44,6 +44,10 @@ def parse_arguments():
     parser.add_argument("--combine", "-c", action="store_true",
                         help=help_combine)
     
+    help_combine = "Very short sumary. Can only be used with arg --combine.False by default"
+    parser.add_argument("--short_summary", "-s", action="store_true",
+                        help=help_combine)
+    
     if len(sys.argv)==1:
         parser.print_help()
         exit()
@@ -58,7 +62,8 @@ def get_arguments():
             "out": output,
             "threads": parser.threads,
             "tesorter_database": parser.tesorter_database,
-            "combine": parser.combine}
+            "combine": parser.combine,
+            "short_summary": parser.short_summary}
 
 
 def main():
@@ -194,8 +199,19 @@ def main():
                 line += f'\t{float(stats["both"]/stats["num_transcripts"])}'
                 line += "\n"
                 combined_summaries_fhand.write(line)
-
-    print("Program finished. Exiting")
-
+    if args["short_summary"]:
+        with open(args["out"]/ "short_summary.tsv", "w") as short_summary_fhand:
+            short_summary_fhand.write("Run\tgenome\tannotation\tstats")
+            for label, results in agat_results.items():
+                stats = get_stats(results["out_fpath"], summaries[label])
+                genome = sequences[label]["assembly"].stem()
+                annotation = sequences[label]["annotation"].stem()
+                line = f"{label}\t{genome}\t{annotation}\t"
+                line += f"IPR_CDS: {stats["coding_protein"]}; "
+                line += f"IPR_NA_TES: {stats["IPR_NA_TEs"]}; "
+                line += f"IPR_TE: {stats["te_protein"]}; "
+                line += f"IPR_MIX: {stats["mixed_protein"]}\n"
+                short_summary_fhand.write(line)
+                
 if __name__ == "__main__":
     main()

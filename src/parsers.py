@@ -131,7 +131,8 @@ def get_stats(agat_stats, summary):
         match = re.search(r"Number of mrna\s+(\d+)", text, re.IGNORECASE)
         num_transcripts = int(match.group(1))
     stats = {"coding_protein": 0, "mixed_protein": 0, "te_protein": 0,
-             "te_mrna": 0, "nonte_mrna": 0, "both": 0, "num_transcripts": num_transcripts}
+             "te_mrna": 0, "nonte_mrna": 0, "both": 0, "num_transcripts": num_transcripts,
+             "IPR_NA_TEs": 0}
     for row in DictReader(open(summary), delimiter=";"):
         protein_te = False
         mrna_te = False
@@ -149,6 +150,8 @@ def get_stats(agat_stats, summary):
             stats["nonte_mrna"] += 1
         if protein_te and mrna_te:
             stats["both"] += 1
+        if row["Interpro_status"] == "NA" and row["TEsort_domains"] != "NA":
+            stats["IPR_NA_TEs: 0"] += 1 
     return stats
 
 
