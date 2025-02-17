@@ -205,8 +205,8 @@ def main():
             for label, results in agat_results.items():
                 stats = get_stats(results["out_fpath"], summaries[label])
                 print(files)
-                genome = Path(files[label]["assembly"]).stem()
-                annotation = Path(files[label]["annotation"]).stem()
+                genome = files[label]["assembly"].stem()
+                annotation = files[label]["annotation"].stem()
                 line = f"{label}\t{genome}\t{annotation}\t"
                 line += f"IPR_CDS: {stats["coding_protein"]}; "
                 line += f"IPR_NA_TES: {stats["IPR_NA_TEs"]}; "
