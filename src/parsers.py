@@ -151,7 +151,7 @@ def get_stats(agat_stats, summary):
         if protein_te and mrna_te:
             stats["both"] += 1
         if row["Interpro_status"] == "NA" and row["TEsort_domains"] != "NA":
-            stats["IPR_NA_TEs: 0"] += 1 
+            stats["IPR_NA_TEs"] += 1 
     return stats
 
 
