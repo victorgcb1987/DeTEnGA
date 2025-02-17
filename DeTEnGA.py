@@ -200,7 +200,7 @@ def main():
                 combined_summaries_fhand.write(line)
     if args["short_summary"]:
         with open(args["out"]/ "short_summary.tsv", "w") as short_summary_fhand:
-            short_summary_fhand.write("Run\tgenome\tannotation\tstats")
+            short_summary_fhand.write("Run\tgenome\tannotation\tstats\n")
             for label, results in agat_results.items():
                 stats = get_stats(results["out_fpath"], summaries[label])
                 genome = files[label]["assembly"].stem
