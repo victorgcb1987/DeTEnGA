@@ -37,7 +37,7 @@ def parse_arguments():
                         help=help_threads, default=1)
     
     help_database = "(Optional) database for TEsorter. rexdb-plant by default"
-    parser.add_argument("--tesorter_database", "-s", type=str,
+    parser.add_argument("--tesorter_database", "-d", type=str,
                         help=help_database, default="rexdb-plant")
     
     help_combine = "(Optional) combine all summaries. False by default"
@@ -212,6 +212,6 @@ def main():
                 line += f"IPR_TE: {stats["te_protein"]}; "
                 line += f"IPR_MIX: {stats["mixed_protein"]}\n"
                 short_summary_fhand.write(line)
-                
+
 if __name__ == "__main__":
     main()
