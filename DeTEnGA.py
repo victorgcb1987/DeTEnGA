@@ -139,7 +139,6 @@ def main():
             log_fhand.write("Removed {} from pipeline, please check the error message\n\n".format(label))
          else:
             log_fhand.write("{} | {}\n".format(values["command"], values["msg"]))
-    print(failed_runs)
     for label in failed_runs:
         interpro_results.pop(label)
 
