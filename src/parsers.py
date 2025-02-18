@@ -130,33 +130,20 @@ def get_stats(agat_stats, summary):
         text = agat_fhand.read()
         match = re.search(r"Number of mrna\s+(\d+)", text, re.IGNORECASE)
         num_transcripts = int(match.group(1))
-    stats = {"coding_protein": 0, "mixed_protein": 0, "te_protein": 0,
-             "te_mrna": 0, "nonte_mrna": 0, "both": 0, "num_transcripts": num_transcripts,
-             "IPR_NA_TEs": 0}
+    stats = {"NINM": 0, "INM": 0, "CINM": 0, 
+             "NIM": 0, "IM": 0, "CIM": 0,
+             "num_transcripts": num_transcripts}
     for row in DictReader(open(summary), delimiter=";"):
-        protein_te = False
-        mrna_te = False
-        if row["Interpro_status"] == "coding_sequence":
-            stats["coding_protein"] += 1
-        if row["Interpro_status"] == "transposable_element":
-            protein_te = True
-            stats["te_protein"] += 1
-        if row["Interpro_status"] == "mixed":
-            stats["mixed_protein"] += 1
-        if row["TEsort_domains"] != "NA":
-            mrna_te = True
-            stats["te_mrna"] += 1
-        else:
-            stats["nonte_mrna"] += 1
-        if protein_te and mrna_te:
-            stats["both"] += 1
-        if row["Interpro_status"] == "NA" and row["TEsort_domains"] != "NA":
-            stats["IPR_NA_TEs"] += 1 
+        if row["Interpro_status"] == "coding_sequence" and row["TEsort_domains"] == "NA":
+            stats["NINM"] +=1
+        if row["Interpro_status"] == "transposbale_element" and row["TEsort_domains"] == "NA":
+            stats["INM"] += 1
+        if row["Interpro_status"] == "mixed" and row["TEsort_domains"] == "NA":
+            stats["CINM"] += 1
+        if row["Interpro_status"] == "coding_sequence" and row["TEsort_domains"] != "NA":
+            stats["NIM"] +=1
+        if row["Interpro_status"] == "transpsoable_element" and row["TEsort_domains"] != "NA":
+            stats["IM"] +=1
+        if row["Interpro_status"] == "mixed" and row["TEsort_domains"] != "NA":
+            stats["CIM"] +=1
     return stats
-
-
-
-
-
-
-

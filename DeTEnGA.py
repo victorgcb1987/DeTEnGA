@@ -14,6 +14,9 @@ from src.run import run_gffread, run_TEsorter, remove_stop_codons, run_interpro,
 
 REXDB_PFAMS = Path(os.path.dirname(os.path.realpath(__file__))) / "data" / "rexdb_Viridiplantae_4.0_pfams.txt"
 
+CATEGORIES = {"Non_TE_Protein(NINM)": "NINM", "Only_Intepro_TE(INM)": "INM",
+              "Only_Chimeric_Interpro(CINM)": "CINM", "Only_TEsorter(NIM)": "NIM",
+              "Interpro_and_TEsorter_TE(IM)": "IM", "Chimeric_Interpro_and_TEsorter_TE(CIM)": "CIM"}
 
 #Generating program options
 def parse_arguments():
@@ -40,14 +43,6 @@ def parse_arguments():
     parser.add_argument("--tesorter_database", "-d", type=str,
                         help=help_database, default="rexdb-plant")
     
-    help_combine = "(Optional) combine all summaries. False by default"
-    parser.add_argument("--combine", "-c", action="store_true",
-                        help=help_combine)
-    
-    help_combine = "Very short sumary. Can only be used with arg --combine.False by default"
-    parser.add_argument("--short_summary", "-s", action="store_true",
-                        help=help_combine)
-    
     if len(sys.argv)==1:
         parser.print_help()
         exit()
@@ -61,9 +56,31 @@ def get_arguments():
     return {"input": parser.input,
             "out": output,
             "threads": parser.threads,
-            "tesorter_database": parser.tesorter_database,
-            "combine": parser.combine,
-            "short_summary": parser.short_summary}
+            "tesorter_database": parser.tesorter_database}
+
+
+def create_header():
+    header = ["Run", "Genome", "Annotation", "Annotated_transcripts"]
+    for key in CATEGORIES:
+        header.append(f"{key}_N")
+    for key in CATEGORIES:
+        header.append(f"{key}_%")
+    header += ["Summary_N", "Summary_%"]
+    return "\t".join(header)
+
+
+def get_row(label, genome, annotation, stats):
+    inverse_categories = {value: key for key, value in CATEGORIES}
+    categories = [key for key in inverse_categories]
+    values = [stats[key] for key in inverse_categories]
+    per_values = [round(float(stats[key]/stats["num_transcripts"]), 3) for key in inverse_categories]
+    summary = "{0}: {1};{2}: {3};{4}: {5};{6}: {7};{8}: {9};{10}: {11}"
+    row = [label, genome, annotation, stats["num_transcripts"]]
+    row += values
+    row += per_values
+    row += [summary.format(*[item for pair in zip(categories, values) for item in pair])]
+    row += [summary.format(*[item for pair in zip(categories, per_values) for item in pair])]    
+    return "\t".join(row)+"\n"
 
 
 def main():
@@ -168,49 +185,21 @@ def main():
                 log_fhand.write(msg)
                 log_fhand.flush()
     
-    if args["combine"]:
-        msg = "##STEP 6: Running stats on annotation files\n"
-        print(msg)
-        log_fhand.write(msg)
-        log_fhand.flush()
-        agat_results = run_agat(summaries, files)
-        with open(args["out"]/ "combined_summaries.tsv", "w") as combined_summaries_fhand:
-            header = "Run\tAnnotated_transcripts(N)\tCoding_proteins(N)"
-            header += "\tTE_proteins(N)\tMixed_Proteins(N)"
-            header += "\tTE_mRNA(N)\tNonTE_mRNA(N)"
-            header += "\tTE_detected_in_both(N)"
-            header += "\tCoding_proteins(%)"
-            header += "\tTE_proteins(%)\tMixed_Proteins(%)"
-            header += "\tTE_mRNA(%)\tNonTE_mRNA(%)"
-            header += "\tTE_detected_in_both(%)\n"
-            combined_summaries_fhand.write(header)
-            for label, results in agat_results.items():
-                stats = get_stats(results["out_fpath"], summaries[label])
-                line = f'{label}\t{stats["num_transcripts"]}'
-                line += f'\t{stats["coding_protein"]}\t{stats["te_protein"]}'
-                line += f'\t{stats["mixed_protein"]}\t{stats["te_mrna"]}'
-                line += f'\t{stats["nonte_mrna"]}\t{stats["both"]}'
-                line += f'\t{float(stats["coding_protein"]/stats["num_transcripts"])}'
-                line += f'\t{float(stats["te_protein"]/stats["num_transcripts"])}'
-                line += f'\t{float(stats["mixed_protein"]/stats["num_transcripts"])}'
-                line += f'\t{float(stats["te_mrna"]/stats["num_transcripts"])}'
-                line += f'\t{float(stats["nonte_mrna"]/stats["num_transcripts"])}'
-                line += f'\t{float(stats["both"]/stats["num_transcripts"])}'
-                line += "\n"
-                combined_summaries_fhand.write(line)
-    if args["short_summary"]:
-        with open(args["out"]/ "short_summary.tsv", "w") as short_summary_fhand:
-            short_summary_fhand.write("Run\tgenome\tannotation\tstats\n")
-            for label, results in agat_results.items():
-                stats = get_stats(results["out_fpath"], summaries[label])
-                genome = files[label]["assembly"].stem
-                annotation = files[label]["annotation"].stem
-                line = f"{label}\t{genome}\t{annotation}\t"
-                line += f"IPR_CDS: {stats["coding_protein"]}; "
-                line += f"IPR_NA_TES: {stats["IPR_NA_TEs"]}; "
-                line += f"IPR_TE: {stats["te_protein"]}; "
-                line += f"IPR_MIX: {stats["mixed_protein"]}\n"
-                short_summary_fhand.write(line)
+    msg = "##STEP 6: Running stats on annotation files\n"
+    print(msg)
+    log_fhand.write(msg)
+    log_fhand.flush()
+    agat_results = run_agat(summaries, files)
+    with open(args["out"]/ "combined_summaries.tsv", "w") as combined_summaries_fhand:
+        header = create_header()
+        combined_summaries_fhand.write(header)
+        for label, results in agat_results.items():
+            stats = get_stats(results["out_fpath"], summaries[label])
+            genome = files[label]["assembly"].stem
+            annotation = files[label]["annotation"].stem
+            row = get_row(label, genome, annotation, stats)
+            combined_summaries_fhand.write(row)
+
 
 if __name__ == "__main__":
     main()
