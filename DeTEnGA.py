@@ -79,7 +79,7 @@ def get_row(label, genome, annotation, stats):
     summary = "{0}: {1};{2}: {3};{4}: {5};{6}: {7};{8}: {9};{10}: {11};{12}: {13}"
     row = [label, genome, annotation]
     row += values
-    row += per_values
+    row += per_values[1:]
     row += [summary.format(*[item for pair in zip(categories, values) for item in pair])]
     row += [summary.format(*[item for pair in zip(categories, per_values) for item in pair])]    
     return "\t".join(row)+"\n"
