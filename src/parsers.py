@@ -136,13 +136,13 @@ def get_stats(agat_stats, summary):
     for row in DictReader(open(summary), delimiter=";"):
         if row["Interpro_status"] == "coding_sequence" and row["TEsort_domains"] == "NA":
             stats["NINM"] +=1
-        if row["Interpro_status"] == "transposbale_element" and row["TEsort_domains"] == "NA":
+        if row["Interpro_status"] == "transposable_element" and row["TEsort_domains"] == "NA":
             stats["INM"] += 1
         if row["Interpro_status"] == "mixed" and row["TEsort_domains"] == "NA":
             stats["CINM"] += 1
         if row["Interpro_status"] == "coding_sequence" and row["TEsort_domains"] != "NA":
             stats["NIM"] +=1
-        if row["Interpro_status"] == "transpsoable_element" and row["TEsort_domains"] != "NA":
+        if row["Interpro_status"] == "transposable_element" and row["TEsort_domains"] != "NA":
             stats["IM"] +=1
         if row["Interpro_status"] == "mixed" and row["TEsort_domains"] != "NA":
             stats["CIM"] +=1
