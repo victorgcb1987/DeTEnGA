@@ -70,7 +70,7 @@ def create_header():
 
 
 def get_row(label, genome, annotation, stats):
-    inverse_categories = {value: key for key, value in CATEGORIES}
+    inverse_categories = {value: key for key, value in CATEGORIES.items()}
     categories = [key for key in inverse_categories]
     values = [stats[key] for key in inverse_categories]
     per_values = [round(float(stats[key]/stats["num_transcripts"]), 3) for key in inverse_categories]
