@@ -66,7 +66,7 @@ def create_header():
     for key in CATEGORIES:
         header.append(f"{key}_%")
     header += ["Summary_N", "Summary_%"]
-    return "\t".join(header)
+    return "\t".join(header)+"\n"
 
 
 def get_row(label, genome, annotation, stats):
