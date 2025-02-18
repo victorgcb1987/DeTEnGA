@@ -77,7 +77,7 @@ def get_row(label, genome, annotation, stats):
     print(values)
     per_values = [str(stats["num_transcripts"])] + [str(round(float(stats[key]/stats["num_transcripts"])*100, 2)) for key in inverse_categories]
     summary = "{0}: {1};{2}: {3};{4}: {5};{6}: {7};{8}: {9};{10}: {11};{12}: {13}"
-    row = [label, genome, annotation, str(stats["num_transcripts"])]
+    row = [label, genome, annotation]
     row += values
     row += per_values
     row += [summary.format(*[item for pair in zip(categories, values) for item in pair])]
