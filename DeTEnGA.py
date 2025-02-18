@@ -73,7 +73,7 @@ def get_row(label, genome, annotation, stats):
     inverse_categories = {value: key for key, value in CATEGORIES.items()}
     categories = [key for key in inverse_categories]
     values = [str(stats[key]) for key in inverse_categories]
-    per_values = [str(round(float(stats[key]/stats["num_transcripts"]), 3)) for key in inverse_categories]
+    per_values = [str(round(float(stats[key]/stats["num_transcripts"]), 3)*100) for key in inverse_categories]
     summary = "{0}: {1};{2}: {3};{4}: {5};{6}: {7};{8}: {9};{10}: {11}"
     row = [label, genome, annotation, str(stats["num_transcripts"])]
     row += values
