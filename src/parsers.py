@@ -132,7 +132,7 @@ def get_stats(agat_stats, summary):
         num_transcripts = int(match.group(1))
     stats = {"PcpM0": 0, "PteM0": 0, "PchM0": 0, 
              "PcpMte": 0, "PteMte": 0, "PchMte": 0, 
-             "P0Mte": 0, "P0M0": 0, "num_transcripts": num_transcripts}
+             "num_transcripts": num_transcripts}
     for row in DictReader(open(summary), delimiter=";"):
         if row["Interpro_status"] == "coding_sequence" and row["TEsort_domains"] == "NA":
             stats["PcpM0"] +=1
@@ -148,6 +148,4 @@ def get_stats(agat_stats, summary):
             stats["PchMte"] +=1
         if row["Interpro_status"] == "NA" and row["TEsort_domains"] != "NA":
             stats["P0Mte"] += 1
-        if row["Interpro_status"] == "NA" and row["TEsort_domains"] == "NA":
-            stats["P0M0"] += 1
     return stats

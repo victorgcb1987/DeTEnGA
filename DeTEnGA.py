@@ -18,7 +18,7 @@ REXDB_PFAMS = Path(os.path.dirname(os.path.realpath(__file__))) / "data" / "rexd
 CATEGORIES = {"No_TE(PcpM0)": "PcpM0", "Protein_TE_only(PteM0)": "PteM0",
               "Chimeric_Protein_Only(PchM0)": "PchM0", "mRNA_TE_Only(PcpMte)": "PcpMte",
               "Protein_and_mRNA_TE(PteMte)": "PteMte", "Chimeric_Protein_and_mRNA_TE(PchMte)": "PchMte",
-              "No_Protein_Domains_mRNA_TE(P0Mte)": "P0Mte", "No_Protein_Domains_No_mRNA_TE(P0M0)": "P0M0"}
+              "No_Protein_Domains_mRNA_TE(P0Mte)": "P0Mte"}
 
 #Generating program options
 def parse_arguments():
