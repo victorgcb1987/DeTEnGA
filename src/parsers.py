@@ -130,20 +130,22 @@ def get_stats(agat_stats, summary):
         text = agat_fhand.read()
         match = re.search(r"Number of mrna\s+(\d+)", text, re.IGNORECASE)
         num_transcripts = int(match.group(1))
-    stats = {"NINM": 0, "INM": 0, "CINM": 0, 
-             "NIM": 0, "IM": 0, "CIM": 0,
-             "num_transcripts": num_transcripts}
+    stats = {"PcpM0": 0, "PteM0": 0, "PchM0": 0, 
+             "PcpMte": 0, "PteMte": 0, "PchMte": 0, 
+             "P0Mte": 0, "num_transcripts": num_transcripts}
     for row in DictReader(open(summary), delimiter=";"):
         if row["Interpro_status"] == "coding_sequence" and row["TEsort_domains"] == "NA":
-            stats["NINM"] +=1
+            stats["PcpM0"] +=1
         if row["Interpro_status"] == "transposable_element" and row["TEsort_domains"] == "NA":
-            stats["INM"] += 1
+            stats["PteM0"] += 1
         if row["Interpro_status"] == "mixed" and row["TEsort_domains"] == "NA":
-            stats["CINM"] += 1
+            stats["PchM0"] += 1
         if row["Interpro_status"] == "coding_sequence" and row["TEsort_domains"] != "NA":
-            stats["NIM"] +=1
+            stats["PcpMte"] +=1
         if row["Interpro_status"] == "transposable_element" and row["TEsort_domains"] != "NA":
-            stats["IM"] +=1
+            stats["PteMte"] +=1
         if row["Interpro_status"] == "mixed" and row["TEsort_domains"] != "NA":
-            stats["CIM"] +=1
+            stats["PchMte"] +=1
+        if row["Interpro_status"] == "NA" and row["TEsort_domains"] != "NA":
+            stats["P0Mte"] += 1
     return stats

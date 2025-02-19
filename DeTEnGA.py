@@ -14,9 +14,11 @@ from src.run import run_gffread, run_TEsorter, remove_stop_codons, run_interpro,
 
 REXDB_PFAMS = Path(os.path.dirname(os.path.realpath(__file__))) / "data" / "rexdb_Viridiplantae_4.0_pfams.txt"
 
-CATEGORIES = {"Non_TE_Protein(NINM)": "NINM", "Only_Intepro_TE(INM)": "INM",
-              "Only_Chimeric_Interpro(CINM)": "CINM", "Only_TEsorter(NIM)": "NIM",
-              "Interpro_and_TEsorter_TE(IM)": "IM", "Chimeric_Interpro_and_TEsorter_TE(CIM)": "CIM"}
+
+CATEGORIES = {"No_TE(PcpM0)": "PcpM0", "Protein_TE_only(PteM0)": "PteM0",
+              "Chimeric_Protein_Only(PchM0)": "PchM0", "mRNA_TE_Only(PcpMte)": "PcpMte",
+              "Protein_and_mRNA_TE(PteMte)": "PteMte", "Chimeric_Protein_and_mRNA_TE(PchMte)": "PchMte",
+              "No_Protein_Domains_mRNA_TE(P0Mte)": "P0Mte"}
 
 #Generating program options
 def parse_arguments():
