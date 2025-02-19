@@ -74,9 +74,7 @@ def create_header():
 def get_row(label, genome, annotation, stats):
     inverse_categories = {value: key for key, value in CATEGORIES.items()}
     categories = ["T"] + [key for key in inverse_categories]
-    print(categories)
     values = [str(stats["num_transcripts"])] + [str(stats[key]) for key in inverse_categories]
-    print(values)
     per_values = [str(stats["num_transcripts"])] + [str(round(float(stats[key]/stats["num_transcripts"])*100, 2)) for key in inverse_categories]
     summary = "{0}: {1};{2}: {3};{4}: {5};{6}: {7};{8}: {9};{10}: {11};{12}: {13}"
     row = [label, genome, annotation]
