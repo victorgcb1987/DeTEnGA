@@ -15,7 +15,7 @@ def run_gffread(fof, output):
         pep_out = out_dir / "{}.pep.fasta".format(prefix)
         
         
-        cmd = "gffread -x {} -g {} {}".format(str(mrna_out), 
+        cmd = "gffread -w {} -g {} {}".format(str(mrna_out), 
                                               str(values["assembly"]),
                                               str(values["annotation"]))
         if mrna_out.exists():
@@ -171,7 +171,6 @@ def run_agat(summaries, annotations):
         annot_file = annotations[label]["annotation"]
         cmd = "agat_sp_statistics.pl --gff {} -o {}".format(str(annot_file), 
                                                             agat_out)
-        print(cmd)
         if agat_out.exists():
             returncode = 99
             msg = "File {} already exists".format(str(agat_out))
