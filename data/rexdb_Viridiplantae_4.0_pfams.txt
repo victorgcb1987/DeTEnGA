@@ -10,7 +10,6 @@ PF02160 Cauliflower mosaic virus peptidase (A3)
 PF02689 Helicase
 PF02992 Transposase family tnp2
 PF03184 DDE superfamily endonuclease
-PF03372 Endonuclease/Exonuclease/phosphatase family
 PF03732 Retrotransposon gag protein
 PF04827 Plant transposon protein
 PF04937 Protein of unknown function (DUF 659)

@@ -50,13 +50,12 @@ def classify_pfams(interpro, te_pfams):
 def parse_TEsort_output(fhand):
     output = defaultdict(list)
     for line in DictReader(fhand,delimiter="\t"):
-        if line["Domains"] != "none":
-            output[line["#TE"]] = {"domains": line["Domains"], 
-                                   "complete": line["Complete"],
-                                   "classification": "{}|{}|{}".format(line["Order"],
-                                                                       line["Superfamily"],
-                                                                       line["Clade"]),
-                                    "strand": line["Strand"]}
+        output[line["#TE"]] = {"domains": line["Domains"], 
+                               "complete": line["Complete"],
+                               "classification": "{}|{}|{}".format(line["Order"],
+                                                                   line["Superfamily"],
+                                                                   line["Clade"]),
+                               "strand": line["Strand"]}
     return output
 
 
