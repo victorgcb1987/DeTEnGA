@@ -38,6 +38,7 @@ def get_pfams_from_interpro_query(fhand):
                     key: sorted(value, key=lambda x: int(x[2]))  # Ordena por el tercer valor (convertido a entero)
                     for key, value in genes.items()}
     return sorted_genes
+
 def classify_pfams(interpro, te_pfams):
     for gene, pfams in interpro.items():
         for pfam in pfams:

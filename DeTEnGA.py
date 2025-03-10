@@ -12,7 +12,7 @@ from src.parsers import (parse_fof, get_pfams_from_db, get_pfams_from_interpro_q
                          get_stats)
 from src.run import run_gffread, run_TEsorter, remove_stop_codons, run_interpro, run_agat
 
-REXDB_PFAMS = Path(os.path.dirname(os.path.realpath(__file__))) / "data" / "rexdb_Viridiplantae_4.0_pfams.txt"
+REXDB_PFAMS = Path(os.path.dirname(os.path.realpath(__file__))) / "data" / "Viridiplantae_2.0_pfams.txt"
 
 
 CATEGORIES = {"No_TE(PcpM0)": "PcpM0", "Protein_TE_only(PteM0)": "PteM0",

@@ -1,4 +1,4 @@
-#Obtained by runinning interproscan on rexdb protein database, Viridiplantae 4.0
+#Obtained by running interproscan on rexdb protein database, Viridiplantae 4.0
 PF00075 RNase H
 PF00077 Retroviral aspartyl protease
 PF00078 Reverse transcriptase (RNA-dependent DNA polymerase)
@@ -6,7 +6,6 @@ PF00385 Chromo (CHRromatin Organisation MOdifier) domain
 PF00665 Integrase core domain
 PF00872 Transposase, Mutator family
 PF01021 Ty transposon capsid protein
-PF02160 Cauliflower mosaic virus peptidase (A3)
 PF02689 Helicase
 PF02992 Transposase family tnp2
 PF03184 DDE superfamily endonuclease
@@ -43,5 +42,20 @@ PF21024 Peptidase A3B
 PF21530 DNA helicase Pif1, 2B domain
 PF21787 TNP-like, RNase H N-terminal domain
 PF22936 Pol polyprotein, beta-barrel domain
+#Added by manual curation of oryza TEs
 PF24626 Tf2-1-like, SH3 domain
-cd00303 retropepsin_like
+PF03108 MuDR family transposase 
+PF10536 Plant mobile domain
+PF10551 MULE transposase domain
+PF13963 Transposase-associated domain
+PF09322 Domain of unknown function (DUF1979)
+PF13961 Domain of unknown function (DUF4219)
+PF12776 Myb/SANT-like DNA-binding domain
+PF13359 DDE superfamily endonuclease
+PF03004 Plant transposase (Ptta/En/Spm family)
+PF14392 Zinc knuckle
+PF14244 gag-polypeptide of LTR copia-type
+PF03078 ATHILA ORF-1 family
+PF04195 Putative gypsy type transposon
+PF14529 Endonuclease-reverse transcriptase
+PF13966 zinc-binding in reverse transcriptase
