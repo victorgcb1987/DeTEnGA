@@ -128,8 +128,12 @@ def write_summary(summary, out_fhand):
 def get_stats(agat_stats, summary):
     with open(agat_stats) as agat_fhand:
         text = agat_fhand.read()
-        match = re.search(r"Number of mrna\s+(\d+)", text, re.IGNORECASE)
-        num_transcripts = int(match.group(1))
+        try:
+            match = re.search(r"Number of mrna\s+(\d+)", text, re.IGNORECASE)
+            num_transcripts = int(match.group(1))
+        except:
+            match = re.search(r"Number of transcript\s+(\d+)", text, re.IGNORECASE)
+            num_transcripts = int(match.group(1))
     stats = {"PcpM0": 0, "PteM0": 0, "PchM0": 0, 
              "PcpMte": 0, "PteMte": 0, "PchMte": 0, 
              "P0Mte":0, "num_transcripts": num_transcripts}
