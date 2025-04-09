@@ -12,7 +12,7 @@ from src.parsers import (parse_fof, get_pfams_from_db, get_pfams_from_interpro_q
                          get_stats)
 from src.run import run_gffread, run_TEsorter, remove_stop_codons, run_interpro, run_agat
 
-REXDB_PFAMS = {"rexdb-plant":Path(os.path.dirname(os.path.realpath(__file__))) / "data" / "Viridiplantae_2.0_pfams.txt",
+REXDB_PFAMS = {"rexdb-plant": Path(os.path.dirname(os.path.realpath(__file__))) / "data" / "Viridiplantae_2.0_pfams.txt",
                "rexdb-metazoa": Path(os.path.dirname(os.path.realpath(__file__))) / "data" / "Metazoa_3.1_pfams.txt"}
 
 
@@ -168,7 +168,7 @@ def main():
     log_fhand.write(msg)
     log_fhand.flush()
     database = REXDB_PFAMS[args["tesorter_database"]]
-    TE_pfams = get_pfams_from_db(REXDB_PFAMS)
+    TE_pfams = get_pfams_from_db(database)
     summaries = {}
     for label in sequences:
         if label in interpro_results and label in TEsorter_results:
