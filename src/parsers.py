@@ -95,6 +95,7 @@ def create_summary(interpro_classified, tesort_output):
             row["tesort_complete"] = "NA"
             row["tesort_class"] = "NA"
             row["tesort_strand"] = "NA"
+        row["detenga_status"] = detenga_status(row)
         summary.append(row)
     for transcript, values in tesort_output.items():
         if transcript not in interpro_classified:
