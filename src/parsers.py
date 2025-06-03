@@ -140,7 +140,7 @@ def write_summary(summary, out_fhand):
         line_total = "" 
         line_total += "{};{};{};{};".format(row["transcript"], row["interpro_status"],
                                             row["tesort_class"], row["pfams_ids"])
-        line_total += "{};{};{};{};{}\n".format(row["pfams_descriptions"], row["tesort_domains"],
+        line_total += "{};{};{};{};{}\n".format(row["pfams_descriptions"].replace(";", ","), row["tesort_domains"],
                                                 row["tesort_complete"], row["tesort_strand"],
                                                 row["detenga_status"])
         out_fhand.write(line_total)
