@@ -13,7 +13,8 @@ from src.parsers import (parse_fof, get_pfams_from_db, get_pfams_from_interpro_q
 from src.run import run_gffread, run_TEsorter, remove_stop_codons, run_interpro, run_agat
 
 REXDB_PFAMS = {"rexdb-plant": Path(os.path.dirname(os.path.realpath(__file__))) / "data" / "Viridiplantae_2.0_pfams.txt",
-               "rexdb-metazoa": Path(os.path.dirname(os.path.realpath(__file__))) / "data" / "Metazoa_3.1_pfams.txt"}
+               "rexdb-metazoa": Path(os.path.dirname(os.path.realpath(__file__))) / "data" / "Metazoa_3.1_pfams.txt",
+               "rexdb": Path(os.path.dirname(os.path.realpath(__file__))) / "data" / "Combined_pfams.txt"}
 
 
 CATEGORIES = {"No_TE(PcpM0)": "PcpM0", "Protein_TE_only(PteM0)": "PteM0",
